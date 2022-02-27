@@ -1,10 +1,10 @@
 
---переносим все согласно условия в InActive
+--переносим в InActive согласно условия
 insert into [del].[tblOutletRoutesInActive] (OL_id,	Route_id,	OL_Number,	DLM,	VisitingTime,	VisitingTimeCompletion)
 select OL_id,	Route_id,	OL_Number,	DLM,	VisitingTime,	VisitingTimeCompletion from [dbo].[tblOutletRoutesActive] 
 where Route_id in (select Route_id from tblRoutes where C_id = 9)
 
---удаляем все согласно условия из Active
+--удаляем из Active согласно условия
 delete from [dbo].[tblOutletRoutesActive] 
 where Route_id in (select Route_id from tblRoutes where C_id = 9)
 
@@ -16,7 +16,7 @@ on oria.Route_id = oriaback.Route_id and oria.OL_id = oriaback.OL_id
 where oriaback.Route_id in (select Route_id from tblRoutes where C_id = 9)
 and oriaback.DateBackup = '2021-12-10'
 
---удаляем все согласно условия из InActive
+--удаляем из InActive согласно условия
 --begin tran
 delete [del].[tblOutletRoutesInActive] from [del].[tblOutletRoutesInActive] oria
 where exists (
